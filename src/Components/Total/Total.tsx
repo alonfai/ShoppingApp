@@ -1,8 +1,7 @@
 import React from 'react';
-// import useStore from 'store';
-// import { ListItem } from 'Components';
 import styled from 'styled-components';
-// import useStore from 'store';
+import { usePriceDefault, usePrice } from 'shared';
+import useStore from 'store';
 
 const Title = styled.h2``;
 
@@ -10,20 +9,20 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
+const Sum = styled.p``;
+
 export type ComponentProps = {};
 
 const Total: React.FC<ComponentProps> = () => {
-  // const { promotions, products } = useStore();
+  const items = Array.from(useStore(state => state.items).values());
+  const discountCode = useStore(state => state.discountCode);
 
-  // for (const promotionKey of promotions.keys()) {
-  //   // switch (promotionKey) {
-  //   //   case ''
-  //   // }
-  // }
-
+  const defaultPrice = usePriceDefault('', items).toFixed(2);
+  const discountedPrice = usePrice(!!discountCode ? discountCode : '', items).toFixed(2);
   return (
     <Wrapper>
-      <Title>Summary</Title>
+      <Title>Total cost</Title>
+      <Sum>${!!discountCode ? discountedPrice : defaultPrice}</Sum>
     </Wrapper>
   );
 };

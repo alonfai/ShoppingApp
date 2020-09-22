@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import useStore from 'store';
 import styled from 'styled-components';
-// import useStore from 'store';
 
 const Title = styled.h2``;
 
 const Wrapper = styled.div`
   width: 100%;
 `;
+
+const CodeLabel = styled.label``;
 
 const CodeInput = styled.input`
   margin-right: 1rem;
@@ -21,16 +22,12 @@ const ValidCodesContainer = styled.p`
 
 const ApplyCodeButton = styled.button``;
 
-const ValidCodesTextHolder = styled.span`
-  margin-bottom: 1rem;
-`;
-
 export type ComponentProps = {};
 
 const Discounts: React.FC<ComponentProps> = () => {
-  const promotionList = useStore(store => store.promotions);
-  const addDiscount = useStore(store => store.addDiscount);
-  const discounts = useStore(store => store.discounts);
+  const promotionList = useStore(state => state.promotions);
+  const updatePromotion = useStore(state => state.updatePromotion);
+  const discountCode = useStore(state => state.discountCode);
   const [input, setInput] = useState('');
 
   const onChangeCode = (e: React.SyntheticEvent<HTMLInputElement>) => {
@@ -39,11 +36,9 @@ const Discounts: React.FC<ComponentProps> = () => {
 
   const onApplyCode = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (discounts.has(input)) {
-      alert('Your code has already been applied');
-    } else if (promotionList.has(input)) {
-      addDiscount(input);
-      alert('Your code has been added');
+    if (promotionList.has(input)) {
+      updatePromotion(input);
+      alert('Your code has been applied and price been adjusted');
     } else {
       alert('Your code is invalid');
     }
@@ -54,11 +49,13 @@ const Discounts: React.FC<ComponentProps> = () => {
     <Wrapper>
       <Title>Promotions</Title>
       {/* {products} */}
-      <CodeInput value={input} onChange={onChangeCode} />
+      <CodeLabel htmlFor='productCode' aria-label='promotional code'>
+        Promotional code:{' '}
+      </CodeLabel>
+      <CodeInput id='productCode' value={input} onChange={onChangeCode} />
       <ApplyCodeButton onClick={onApplyCode}>Apply code</ApplyCodeButton>
-      <ValidCodesContainer role='group' aria-labelledby='validCodes'>
-        <ValidCodesTextHolder id='validCodes'>Applied code list: </ValidCodesTextHolder>
-        {Array.from(discounts.values()).join(', ')}
+      <ValidCodesContainer role='group' aria-label='Applied code: '>
+        {discountCode && `${discountCode} has been applied`}
       </ValidCodesContainer>
     </Wrapper>
   );

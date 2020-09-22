@@ -14,7 +14,11 @@ const ListItemWrapper = styled.li`
 
 const Wrapper = styled.div`
   width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 `;
+
+const EmptyList = styled.span``;
 
 export type ComponentProps = {};
 
@@ -24,14 +28,17 @@ const Cart: React.FC<ComponentProps> = () => {
   return (
     <Wrapper>
       <Title>Cart List</Title>
-      <ListWrapper role='list'>
-        {selectedItems.length === 0 && <span>No items have been added to the cart</span>}
-        {selectedItems.map(({ quantity, ...rest }) => (
-          <ListItemWrapper key={rest.id}>
-            <Item product={rest} quantity={quantity} />
-          </ListItemWrapper>
-        ))}
-      </ListWrapper>
+      {selectedItems.length === 0 ? (
+        <EmptyList>No items have been added to the cart</EmptyList>
+      ) : (
+        <ListWrapper role='list'>
+          {selectedItems.map(({ quantity, ...rest }) => (
+            <ListItemWrapper key={rest.id}>
+              <Item product={rest} quantity={quantity} />
+            </ListItemWrapper>
+          ))}
+        </ListWrapper>
+      )}
     </Wrapper>
   );
 };

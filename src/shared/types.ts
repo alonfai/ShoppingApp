@@ -17,6 +17,21 @@ export interface Product {
 }
 
 /**
+ * Retrieve the new total price for the list of items
+ */
+export type GetNewPriceAction = (code: string, items: Item[]) => number;
+
+/**
+ * Selectable item in the cart
+ */
+export interface Item extends Product {
+  /**
+   * Number of items for the product in the cart
+   */
+  quantity: number;
+}
+
+/**
  * Promotion information on a product
  */
 export interface Promotion {
@@ -45,19 +60,15 @@ export type State = {
   /**
    * list of all products in the cart, keyed by the product id and value as number of units been bought for that product
    */
-  items: Map<
-    string,
-    Product & {
-      /**
-       * Number of items for the product in the cart
-       */
-      quantity: number;
-    }
-  >;
+  items: Map<string, Item>;
   /**
-   * list of all promotional ids
+   * list of all promotional ids user has applied in the cart
    */
-  discounts: Set<string>;
+  discountCode: string;
+  /**
+   * Shopping cart total price
+   */
+  totalPrice: number;
   /**
    * Update cart with given product id and number of units for that product. Returns true/false on completion
    */
@@ -65,5 +76,5 @@ export type State = {
   /**
    * Adds new promotional id to the checkout page. Returns true/false on completion
    */
-  addDiscount: (id: string) => boolean;
+  updatePromotion: (code: string) => boolean;
 };

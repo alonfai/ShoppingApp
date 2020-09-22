@@ -8,14 +8,16 @@ import db from './db';
  * @param storeName optional name for the data store, which will be prefixed to your actions
  */
 export function getStore(storeName: string) {
-  const store = produce(set => ({
+  const store = produce((set, get) => ({
     products: db.products,
     promotions: db.promotions,
     items: new Map(),
-    discounts: new Set(),
+    discountCode: '',
+    totalPrice: 0,
     updateItems: (id, quantity) => {
+      const { products } = get();
       // product id selected exists
-      const product = db.products.get(id);
+      const product = products.get(id);
       if (product) {
         set(draft => {
           if (quantity === 0) {
@@ -33,12 +35,18 @@ export function getStore(storeName: string) {
         return false;
       }
     },
-    addDiscount: id => {
-      const promotion = db.promotions.get(id);
+
+    /**
+     * Retrieve the new total price for the list of items using given promotional item
+     */
+    updatePromotion: discountCode => {
+      const { promotions } = get();
+      const promotion = promotions.get(discountCode);
+
       // promotion id exists
       if (promotion) {
         set(draft => {
-          draft.discounts.add(id);
+          draft.discountCode = discountCode;
         });
         return true;
       } else {

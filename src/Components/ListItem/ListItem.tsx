@@ -33,6 +33,7 @@ const ListItem: React.FC<ComponentProps> = ({ product }) => {
   };
   return (
     <Wrapper>
+      <Info>Product ID: {product.id}</Info>
       <Info>Product Name: {product.name}</Info>
       <Info>Price: {product.price}</Info>
       <AddButton
