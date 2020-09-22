@@ -1,6 +1,9 @@
+import produce, { enableMapSet } from 'immer';
+
 import { StateCreator } from 'zustand';
-import produce from 'immer';
 import * as Interfaces from 'shared/types';
+
+enableMapSet();
 
 /**
  * use immer as proxy for the set method

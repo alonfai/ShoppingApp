@@ -1,53 +1,42 @@
-import create, { UseStore } from 'zustand';
+import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 import produce from './middlewares/immer';
-import log from './middlewares/log';
-import * as Interfaces from 'shared/types';
-import useEntity from './useEntity';
+import db from './db';
 
 /**
  * React hook to get the data store
  * @param storeName optional name for the data store, which will be prefixed to your actions
  */
-export default function useStore(storeName = 'Nintex') {
-  const products = useEntity<{
-    [id: string]: Interfaces.Product;
-  }>('products');
-  const promotions = useEntity<{
-    [id: string]: Interfaces.Promotion;
-  }>('promotions');
-
+export function getStore(storeName: string) {
   const store = produce(set => ({
-    products,
-    promotions,
-    items: {},
+    products: db.products,
+    promotions: db.promotions,
+    items: new Map(),
     discounts: new Set(),
-    updateProducts: (id, quantity) => {
+    updateItems: (id, quantity) => {
       // product id selected exists
-      if (products[id]) {
+      const product = db.products.get(id);
+      if (product) {
         set(draft => {
-          // Product was added before to the cart
-          draft.items[id] = quantity;
+          if (quantity === 0) {
+            draft.items.delete(id);
+          } else {
+            // Product was added before to the cart
+            draft.items.set(id, {
+              ...product,
+              quantity
+            });
+          }
         });
         return true;
       } else {
         return false;
       }
     },
-    removePromotion: id => {
+    addDiscount: id => {
+      const promotion = db.promotions.get(id);
       // promotion id exists
-      if (promotions[id]) {
-        set(draft => {
-          return draft.discounts.delete(id);
-        });
-        return true;
-      } else {
-        return false;
-      }
-    },
-    addPromotion: id => {
-      // promotion id exists
-      if (promotions[id]) {
+      if (promotion) {
         set(draft => {
           draft.discounts.add(id);
         });
@@ -58,13 +47,12 @@ export default function useStore(storeName = 'Nintex') {
     }
   }));
 
-  // Create a store with set method turned into an immer proxy to avoid changing nested state with log enabled for development mode
-  const createStore: UseStore<Interfaces.State> = create<Interfaces.State>(
-    process.env.NODE_ENV === 'development' ? log(store) : store
-  );
-
   /**
-   * return a devtools middleware version of the store (ref: https://github.com/pmndrs/zustand#redux-devtools)
+   * return a devtools and log middlewares version of the store in development mode (ref: https://github.com/pmndrs/zustand#redux-devtools)
    */
-  return create(devtools(createStore, storeName));
+  return process.env.NODE_ENV === 'development'
+    ? create(devtools(store, storeName))
+    : create(store);
 }
+
+export default getStore('Nintex');

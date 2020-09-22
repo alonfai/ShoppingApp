@@ -1,25 +1,38 @@
 import React from 'react';
 import styled from 'styled-components';
-import List from 'Components/List';
-import Discounts from 'Components/Discounts';
-import Total from 'Components/Total';
+import { Item } from 'Components';
+import useStore from 'store';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
+const Title = styled.h2``;
+
+const ListWrapper = styled.ul``;
+
+const ListItemWrapper = styled.li`
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+`;
+
+const Wrapper = styled.div`
+  width: 100%;
 `;
 
 export type ComponentProps = {};
 
 const Cart: React.FC<ComponentProps> = () => {
+  const selectedItems = Array.from(useStore(state => state.items).values());
+
   return (
-    <Container>
-      <List />
-      <Discounts />
-      <Total />
-    </Container>
+    <Wrapper>
+      <Title>Cart List</Title>
+      <ListWrapper role='list'>
+        {selectedItems.length === 0 && <span>No items have been added to the cart</span>}
+        {selectedItems.map(({ quantity, ...rest }) => (
+          <ListItemWrapper key={rest.id}>
+            <Item product={rest} quantity={quantity} />
+          </ListItemWrapper>
+        ))}
+      </ListWrapper>
+    </Wrapper>
   );
 };
 

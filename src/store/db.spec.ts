@@ -1,7 +1,7 @@
 import { Interfaces } from 'shared';
-import useEntity from './useEntity';
+import { parseDB } from './db';
 
-describe('store/useEntity', () => {
+describe('store/db', () => {
   it('return unique key/value object based on the db.json input file', () => {
     const sourceProducts: Interfaces.Product[] = [
       {
@@ -25,7 +25,7 @@ describe('store/useEntity', () => {
         description: 'Promotion number 2'
       }
     ];
-    const products = useEntity<{
+    const products = parseDB<{
       [id: string]: Interfaces.Product;
     }>('products', {
       products: sourceProducts,
@@ -36,7 +36,7 @@ describe('store/useEntity', () => {
     expect(products['product_1']).toEqual(sourceProducts[0]);
     expect(products['product_2']).toEqual(sourceProducts[1]);
 
-    const promotions = useEntity<{
+    const promotions = parseDB<{
       [id: string]: Interfaces.Promotion;
     }>('promotions', { products: sourceProducts, promotions: sourcePromotions });
 

@@ -1,19 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
-import Cart from 'Components/Cart';
+import { List, Cart, Discounts, Total } from 'Components';
+import { Styled } from 'shared';
 
 const Wrapper = styled.main`
-  margin: 0px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding-top: 20px;
 `;
 
-const Title = styled.h1``;
+const Title = styled.h1`
+  text-decoration: underline;
+`;
 
 const App: React.FC = () => {
   return (
     <Wrapper>
       <Title>Checkout page</Title>
+      <List />
+      <Styled.LineSepeartor role='separator' />
       <Cart />
+      <Styled.LineSepeartor role='separator' />
+      <Discounts />
+      <Styled.LineSepeartor role='separator' />
+      <Total />
     </Wrapper>
   );
 };

@@ -37,21 +37,23 @@ export type State = {
   /**
    * List of available products
    */
-  products: {
-    [id: string]: Product;
-  };
+  products: Map<string, Product>;
   /**
    * list of available promotions
    */
-  promotions: {
-    [id: string]: Promotion;
-  };
+  promotions: Map<string, Promotion>;
   /**
    * list of all products in the cart, keyed by the product id and value as number of units been bought for that product
    */
-  items: {
-    [id: string]: number;
-  };
+  items: Map<
+    string,
+    Product & {
+      /**
+       * Number of items for the product in the cart
+       */
+      quantity: number;
+    }
+  >;
   /**
    * list of all promotional ids
    */
@@ -59,13 +61,9 @@ export type State = {
   /**
    * Update cart with given product id and number of units for that product. Returns true/false on completion
    */
-  updateProducts: (id: string, quantity: number) => boolean;
+  updateItems: (id: string, quantity: number) => boolean;
   /**
    * Adds new promotional id to the checkout page. Returns true/false on completion
    */
-  addPromotion: (id: string) => boolean;
-  /**
-   * Remove the promotional id from the checkout page. Returns true/false on completion
-   */
-  removePromotion: (id: string) => boolean;
+  addDiscount: (id: string) => boolean;
 };
