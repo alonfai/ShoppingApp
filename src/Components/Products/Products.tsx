@@ -1,5 +1,5 @@
-import React from 'react';
-import { ListItem } from 'Components';
+import React, { useCallback } from 'react';
+import ListItem from './ListItem';
 import styled from 'styled-components';
 import useStore from 'store';
 
@@ -17,13 +17,23 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
+const EmptyProductList = styled.span`
+  font-size: 1rem;
+  font-weight: bold;
+  color: red;
+`;
+
 export type ComponentProps = {};
 
-const List: React.FC<ComponentProps> = () => {
-  const products = useStore(store => store.products);
+const Products: React.FC<ComponentProps> = () => {
+  const products = useStore(state => state.products);
+  const itemsLength = useStore(useCallback(state => Array.from(state.items.keys()).length, []));
   return (
     <Wrapper>
       <Title>Products List</Title>
+      {itemsLength === Array.from(products.keys()).length && (
+        <EmptyProductList>All products have been added to the cart</EmptyProductList>
+      )}
       <ListWrapper role='list'>
         {Array.from(products.values()).map(product => (
           <ListItemWrapper key={product.id}>
@@ -35,4 +45,4 @@ const List: React.FC<ComponentProps> = () => {
   );
 };
 
-export default List;
+export default Products;

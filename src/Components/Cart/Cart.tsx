@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Item } from 'Components';
+import Item from './Item';
 import useStore from 'store';
 
 const Title = styled.h2``;
@@ -18,7 +18,11 @@ const Wrapper = styled.div`
   margin-bottom: 1rem;
 `;
 
-const EmptyList = styled.span``;
+const EmptyList = styled.span`
+  font-size: 1rem;
+  font-weight: bold;
+  color: red;
+`;
 
 export type ComponentProps = {};
 

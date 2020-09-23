@@ -62,7 +62,7 @@ export type State = {
    */
   items: Map<string, Item>;
   /**
-   * list of all promotional ids user has applied in the cart
+   * promotional id user has applied in the cart
    */
   discountCode: string;
   /**

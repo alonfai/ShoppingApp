@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { List, Cart, Discounts, Total } from 'Components';
+import { Products, Cart, Discounts, Total } from 'Components';
 import { Styled } from 'shared';
 
 const Wrapper = styled.main`
@@ -18,7 +18,7 @@ const App: React.FC = () => {
   return (
     <Wrapper>
       <Title>Checkout page</Title>
-      <List />
+      <Products />
       <Styled.LineSepeartor role='separator' />
       <Cart />
       <Styled.LineSepeartor role='separator' />

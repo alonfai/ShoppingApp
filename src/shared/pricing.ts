@@ -9,15 +9,13 @@ const useCalcPricingOnCodeA: Interfaces.GetNewPriceAction = (
     if (code !== 'RRD4D32') {
       return 0;
     }
-    return items
-      .map(item => item.price)
-      .reduce((prev, next) => {
-        return prev + next;
-      }, 0);
+    return items.reduce((prev, next) => {
+      return prev + next.price * next.quantity;
+    }, 0);
   }, [code, items]);
 
-  if (totalPricePreDiscount > 1500) {
-    return totalPricePreDiscount * 0.85;
+  if (totalPricePreDiscount > 1000) {
+    return totalPricePreDiscount * 0.9;
   }
   return totalPricePreDiscount;
 };
@@ -30,15 +28,13 @@ const useCalcPricingOnCodeB: Interfaces.GetNewPriceAction = (
     if (code !== '44F4T11') {
       return 0;
     }
-    return items
-      .map(item => item.price)
-      .reduce((prev, next) => {
-        return prev + next;
-      }, 0);
+    return items.reduce((prev, next) => {
+      return prev + next.price * next.quantity;
+    }, 0);
   }, [code, items]);
 
-  if (totalPricePreDiscount > 1000) {
-    return totalPricePreDiscount * 0.9;
+  if (totalPricePreDiscount > 1500) {
+    return totalPricePreDiscount * 0.85;
   }
   return totalPricePreDiscount;
 };
@@ -88,11 +84,9 @@ export const usePriceDefault: Interfaces.GetNewPriceAction = (
   items: Interfaces.Item[]
 ) => {
   return useMemo(() => {
-    return items
-      .map(item => item.price)
-      .reduce((prev, next) => {
-        return prev + next;
-      }, 0);
+    return items.reduce((prev, next) => {
+      return prev + next.price * next.quantity;
+    }, 0);
   }, [items]);
 };
 

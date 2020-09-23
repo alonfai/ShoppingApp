@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { Interfaces } from 'shared';
 import useStore from 'store';
@@ -26,21 +26,17 @@ export type ComponentProps = {
 
 const ListItem: React.FC<ComponentProps> = ({ product }) => {
   const updateItems = useStore(state => state.updateItems);
-  const items = useStore(state => state.items);
+  const itemAdded = useStore(useCallback(state => state.items.has(product.id), [product]));
   const onQuantityChange = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     updateItems(product.id, 1);
   };
-  return (
+  return itemAdded ? null : (
     <Wrapper>
       <Info>Product ID: {product.id}</Info>
       <Info>Product Name: {product.name}</Info>
       <Info>Price: {product.price}</Info>
-      <AddButton
-        onClick={onQuantityChange}
-        disabled={items.has(product.id)}
-        aria-disabled={items.has(product.id)}
-        aria-label='add product to cart'>
+      <AddButton onClick={onQuantityChange} aria-label='add product to cart'>
         Add product to cart
       </AddButton>
     </Wrapper>
