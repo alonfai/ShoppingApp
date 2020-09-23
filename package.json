@@ -36,6 +36,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
+    "coverage": "yarn test --coverage --watchAll=false",
     "eject": "react-scripts eject",
     "lint": "run-p -c lint:*",
     "lint-fix": "run-p -c \"lint:ts --fix\"",
@@ -50,9 +52,6 @@
       "!src/mocks/**",
       "!src/serviceWorker.ts",
       "!<rootDir>/node_modules/"
-    ],
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/setupTests.ts"
     ],
     "coverageThreshold": {
       "global": {
