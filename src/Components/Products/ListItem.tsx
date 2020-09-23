@@ -27,6 +27,7 @@ export type ComponentProps = {
 const ListItem: React.FC<ComponentProps> = ({ product }) => {
   const updateItems = useStore(state => state.updateItems);
   const itemAdded = useStore(useCallback(state => state.items.has(product.id), [product]));
+
   const onQuantityChange = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     updateItems(product.id, 1);

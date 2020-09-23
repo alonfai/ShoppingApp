@@ -79,10 +79,7 @@ const useCalcPriceOnCodeD: Interfaces.GetNewPriceAction = (
   }, [code, items]);
 };
 
-export const usePriceDefault: Interfaces.GetNewPriceAction = (
-  code: string,
-  items: Interfaces.Item[]
-) => {
+export const usePriceDefault: (items: Interfaces.Item[]) => number = items => {
   return useMemo(() => {
     return items.reduce((prev, next) => {
       return prev + next.price * next.quantity;
@@ -90,6 +87,11 @@ export const usePriceDefault: Interfaces.GetNewPriceAction = (
   }, [items]);
 };
 
+/**
+ * Get total price for the shopping cart using the given code
+ * @param code code to use
+ * @param items list of products in shopping cart
+ */
 const usePrice: Interfaces.GetNewPriceAction = (code, items) => {
   return (
     useCalcPricingOnCodeA(code, items) +

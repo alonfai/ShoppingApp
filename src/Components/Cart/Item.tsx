@@ -19,17 +19,19 @@ const Item: React.FC<ComponentProps> = ({ product, quantity }) => {
   const updateItems = useStore(state => state.updateItems);
 
   const onAdd = (e: React.SyntheticEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     updateItems(product.id, quantity + 1);
   };
 
   const onRemove = (e: React.SyntheticEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     updateItems(product.id, Math.max(quantity - 1, 0));
   };
 
   return (
     <>
-      <Info>Name: {product.name}</Info>
-      <Info>Price: {product.price}</Info>
+      <Info aria-label='Name'>Name: {product.name}</Info>
+      <Info aria-label='Price'>Price: {product.price}</Info>
       <Button aria-label='remove 1 item' onClick={onRemove}>
         -
       </Button>

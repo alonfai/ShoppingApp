@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Item from './Item';
 import useStore from 'store';
+import { Interfaces } from 'shared';
 
 const Title = styled.h2``;
 
@@ -26,17 +27,21 @@ const EmptyList = styled.span`
 
 export type ComponentProps = {};
 
+export function convertItemsMapToArray(items: Map<string, Interfaces.Item>) {
+  return Array.from(items.values());
+}
+
 const Cart: React.FC<ComponentProps> = () => {
-  const selectedItems = Array.from(useStore(state => state.items).values());
+  const items = convertItemsMapToArray(useStore(state => state.items));
 
   return (
     <Wrapper>
       <Title>Cart List</Title>
-      {selectedItems.length === 0 ? (
+      {items.length === 0 ? (
         <EmptyList>No items have been added to the cart</EmptyList>
       ) : (
         <ListWrapper role='list'>
-          {selectedItems.map(({ quantity, ...rest }) => (
+          {items.map(({ quantity, ...rest }) => (
             <ListItemWrapper key={rest.id}>
               <Item product={rest} quantity={quantity} />
             </ListItemWrapper>

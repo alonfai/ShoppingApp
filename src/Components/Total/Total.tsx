@@ -17,12 +17,12 @@ const Total: React.FC<ComponentProps> = () => {
   const items = Array.from(useStore(state => state.items).values());
   const discountCode = useStore(state => state.discountCode);
 
-  const defaultPrice = usePriceDefault('', items).toFixed(2);
+  const defaultPrice = usePriceDefault(items).toFixed(2);
   const discountedPrice = usePrice(!!discountCode ? discountCode : '', items).toFixed(2);
   return (
     <Wrapper>
       <Title>Total cost</Title>
-      <Sum>${!!discountCode ? discountedPrice : defaultPrice}</Sum>
+      <Sum data-testid='total'>${!!discountCode ? discountedPrice : defaultPrice}</Sum>
     </Wrapper>
   );
 };

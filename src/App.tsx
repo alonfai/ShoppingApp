@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Products, Cart, Discounts, Total } from 'Components';
-import { Styled } from 'shared';
+
+const LineSepeartor = styled.hr`
+	width: 100%;
+`;
 
 const Wrapper = styled.main`
   display: flex;
@@ -19,11 +22,11 @@ const App: React.FC = () => {
     <Wrapper>
       <Title>Checkout page</Title>
       <Products />
-      <Styled.LineSepeartor role='separator' />
+      <LineSepeartor role='separator' />
       <Cart />
-      <Styled.LineSepeartor role='separator' />
+      <LineSepeartor role='separator' />
       <Discounts />
-      <Styled.LineSepeartor role='separator' />
+      <LineSepeartor role='separator' />
       <Total />
     </Wrapper>
   );

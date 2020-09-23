@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import useStore from 'store';
 import styled from 'styled-components';
+import { createImportSpecifier } from 'typescript';
 
 const Title = styled.h2``;
 
@@ -52,9 +53,9 @@ const Discounts: React.FC<ComponentProps> = () => {
       <CodeLabel htmlFor='productCode' aria-label='promotional code'>
         Promotional code:{' '}
       </CodeLabel>
-      <CodeInput id='productCode' value={input} onChange={onChangeCode} />
+      <CodeInput id='productCode' data-testid='productCode' value={input} onChange={onChangeCode} />
       <ApplyCodeButton onClick={onApplyCode}>Apply code</ApplyCodeButton>
-      <ValidCodesContainer role='group' aria-label='Applied code: '>
+      <ValidCodesContainer data-testid='appliedCode' role='group' aria-label='Applied code: '>
         {discountCode && `${discountCode} has been applied`}
       </ValidCodesContainer>
     </Wrapper>

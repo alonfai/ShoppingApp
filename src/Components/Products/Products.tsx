@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import ListItem from './ListItem';
 import styled from 'styled-components';
 import useStore from 'store';
@@ -27,20 +27,22 @@ export type ComponentProps = {};
 
 const Products: React.FC<ComponentProps> = () => {
   const products = useStore(state => state.products);
-  const itemsLength = useStore(useCallback(state => Array.from(state.items.keys()).length, []));
+  const itemsLength = useStore(state => Array.from(state.items.keys()).length);
+
   return (
     <Wrapper>
       <Title>Products List</Title>
-      {itemsLength === Array.from(products.keys()).length && (
+      {itemsLength === Array.from(products.keys()).length ? (
         <EmptyProductList>All products have been added to the cart</EmptyProductList>
+      ) : (
+        <ListWrapper role='list'>
+          {Array.from(products.values()).map(product => (
+            <ListItemWrapper key={product.id}>
+              <ListItem key={product.id} product={product} />
+            </ListItemWrapper>
+          ))}
+        </ListWrapper>
       )}
-      <ListWrapper role='list'>
-        {Array.from(products.values()).map(product => (
-          <ListItemWrapper key={product.id}>
-            <ListItem key={product.id} product={product} />
-          </ListItemWrapper>
-        ))}
-      </ListWrapper>
     </Wrapper>
   );
 };
