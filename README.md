@@ -29,6 +29,7 @@ In this project, the main npm modules used are
 * React 16.8+ with React hooks
 * Typescript 4
 * Jest + Testing-library
+* Styled Components for CSS-In-JS styling
 * [immer](https://immerjs.github.io/) for immutable data management
 * Zustand state management library with support of React hooks and middlewares for Immer + Logging (https://github.com/pmndrs/zustand)
 * ESLint + Prettier + Stylelint
