@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 import { mocks } from 'mocks';
 import shortid from 'shortid';
 import usePricing, { usePriceDefault } from './pricing';

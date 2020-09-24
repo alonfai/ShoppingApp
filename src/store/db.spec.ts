@@ -32,16 +32,16 @@ describe('store/db', () => {
       promotions: sourcePromotions
     });
 
-    expect(Object.keys(products)).toEqual(['product_1', 'product_2']);
-    expect(products['product_1']).toEqual(sourceProducts[0]);
-    expect(products['product_2']).toEqual(sourceProducts[1]);
+    expect(Array.from(products.keys())).toEqual(['product_1', 'product_2']);
+    expect(products.get('product_1')).toEqual(sourceProducts[0]);
+    expect(products.get('product_2')).toEqual(sourceProducts[1]);
 
     const promotions = parseDB<{
       [id: string]: Interfaces.Promotion;
     }>('promotions', { products: sourceProducts, promotions: sourcePromotions });
 
-    expect(Object.keys(promotions)).toEqual(['promotion_1', 'promotion_2']);
-    expect(promotions['promotion_1']).toEqual(sourcePromotions[0]);
-    expect(promotions['promotion_2']).toEqual(sourcePromotions[1]);
+    expect(Array.from(promotions.keys())).toEqual(['promotion_1', 'promotion_2']);
+    expect(promotions.get('promotion_1')).toEqual(sourcePromotions[0]);
+    expect(promotions.get('promotion_2')).toEqual(sourcePromotions[1]);
   });
 });

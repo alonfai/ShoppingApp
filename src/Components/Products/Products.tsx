@@ -38,7 +38,7 @@ const Products: React.FC<ComponentProps> = () => {
         <ListWrapper role='list'>
           {Array.from(products.values()).map(product => (
             <ListItemWrapper key={product.id}>
-              <ListItem key={product.id} product={product} />
+              <ListItem product={product} />
             </ListItemWrapper>
           ))}
         </ListWrapper>

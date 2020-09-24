@@ -1,6 +1,7 @@
 import create from 'zustand';
 import createVanilla, { GetState, SetState } from 'zustand/vanilla';
 import { Interfaces } from 'shared';
+import { Interface } from 'readline';
 
 const product_1: Interfaces.Product = {
   id: 'product_1',
@@ -138,11 +139,21 @@ const store = createVanilla<Interfaces.State>((set, get) => ({
 }));
 
 /**
- * All products added to shopping cart (the "items" field is all given products) as vanilla store
+ * Empty shopping cart items (the "items" field is empty Map) as vanilla store
  */
 const emptyStore = createVanilla<Interfaces.State>((set, get) => ({
   ...data,
   items: new Map<string, Interfaces.Item>(),
+  updateItems: getUpdateItems(set, get),
+  updatePromotion: getUpdatePromotion(set, get)
+}));
+
+/**
+ * Added discount code variable to a store as vanilla store
+ */
+const discountCode = createVanilla<Interfaces.State>((set, get) => ({
+  ...data,
+  discountCode: 'AAA',
   updateItems: getUpdateItems(set, get),
   updatePromotion: getUpdatePromotion(set, get)
 }));
@@ -157,4 +168,24 @@ const useEmptyStore = create<Interfaces.State>((set, get) => ({
   updatePromotion: getUpdatePromotion(set, get)
 }));
 
-export { products, items, promotions, useStore, useEmptyStore, store, emptyStore };
+/**
+ * Added discount code variable to a store as React store hook
+ */
+const useDiscountStore = create<Interfaces.State>((set, get) => ({
+  ...data,
+  discountCode: 'AAA',
+  updateItems: getUpdateItems(set, get),
+  updatePromotion: getUpdatePromotion(set, get)
+}));
+
+export {
+  products,
+  items,
+  promotions,
+  useStore,
+  useEmptyStore,
+  useDiscountStore,
+  store,
+  emptyStore,
+  discountCode
+};
