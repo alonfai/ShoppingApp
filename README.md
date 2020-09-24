@@ -184,7 +184,6 @@ Runs Stylelint on given source files and report on any known issues found not ma
 
 ## References
 
-* [React Context API](<https://reactjs.org/docs/context.html>)
 * [Jest CLI](<https://jestjs.io/docs/en/configuration>)
 * [Testing Library](<https://testing-library.com/docs/intro>)
 * [Zustand](<https://github.com/pmndrs/zustand>)
