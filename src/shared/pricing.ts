@@ -88,7 +88,7 @@ export const usePriceDefault: (items: Interfaces.Item[]) => number = items => {
 };
 
 /**
- * Get total price for the shopping cart using the given code
+ * Get total price for the shopping cart using the given code. Any change to pricing should be dealt with inside and every pricing rule method should implement the interface of Interface.GetNewPriceAction
  * @param code code to use
  * @param items list of products in shopping cart
  */
