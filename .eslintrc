@@ -1,11 +1,8 @@
 {
-  "extends": ["react-app", "plugin:jsx-a11y/recommended"],
+  "extends": ["react-app"],
   "rules": {
     "no-unused-vars": "off"
   },
-  "plugins": [
-    "jsx-a11y"
-  ],
   "overrides": [
     {
       // enable the rule specifically for TypeScript files

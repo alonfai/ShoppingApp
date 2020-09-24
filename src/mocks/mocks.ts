@@ -1,7 +1,6 @@
 import create from 'zustand';
 import createVanilla, { GetState, SetState } from 'zustand/vanilla';
 import { Interfaces } from 'shared';
-import { Interface } from 'readline';
 
 const product_1: Interfaces.Product = {
   id: 'product_1',

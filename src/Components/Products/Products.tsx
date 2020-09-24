@@ -6,7 +6,7 @@ import useStore from 'store';
 const Title = styled.h2``;
 
 const ListWrapper = styled.ul`
-  list-style-type: circle;
+  list-style-type: none;
 `;
 
 const ListItemWrapper = styled.li`
